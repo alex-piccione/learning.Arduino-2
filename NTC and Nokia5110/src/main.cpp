@@ -1,27 +1,88 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+#include <Adafruit_GFX.h>     // Include the Adafruit GFX library
+#include <Adafruit_PCD8544.h> // Include the Adafruit PCD8544 library for Nokia 5110 LCD
+
+const int ntc_pin = A0; // Pin for the NTC thermistor
+const float ntc_R0 = 2600; // NTC thermistor resistance at reference temperature (25 degrees Celsius)
+const float ntc_T0 = 298.15; // Reference temperature in Kelvin (25 degrees Celsius + 273.15)
+const float ntc_BETA = 3950; // Beta value for the NTC thermistor
+const float ntc_R_ref = 2000; // instead of 2600
+
+const float ADC_MAX = 1023; // Maximum ADC value for a 10-bit ADC
+const float VCC = 5;
+
+const int display_pin_RST = 2; // Reset pin for the LCD
+const int display_pin_CE = 3; // Chip Enable pin for the LCD
+const int display_pin_DC = 4; // Data/Command pin for the LCD
+const int display_pin_DIN = 5; // Data In pin for the LCD
+const int display_pin_CLK = 6; // Clock pin for the LCD
+
+// function declarations
+void printText(String text);
+float calculateTemperature();
+
+// define pins of the display, CLK, DIN, DC, CE, RST
+Adafruit_PCD8544 display(display_pin_CLK, display_pin_DIN, display_pin_DC, display_pin_CE, display_pin_RST);
+
+// define display dimensions (for clarity and for calculus)
+#define DISPLAY_WIDTH 84  // Width of the Nokia 5110 LCD in pixels
+#define DISPLAY_HEIGHT 48  // Height of the Nokia 5110 LCD in pixels
+
+//const int ntcPin = A0; // Pin for the NTC thermistor
+//const float beta = 3950.0; // Beta value for the NTC thermistor
 
 void setup() {
   Serial.begin(9600);
+
+  // Initialize the Nokia 5110 LCD
+  display.begin(); // initialize SPI communication
+  display.setContrast(40); // Set contrast for better visibility, from 40 to 60
+  display.clearDisplay(); // Clear the display buffer
+  //display.setCursor(0, 0);
+
+  printText("Display OK!\n\nHello world");
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
-
-  
-  Serial.println("Hello, World!");
-
-  int result = myFunction(5, 7);
-  Serial.print("Result of myFunction(5, 7): "); 
-  Serial.println(result);
-  Serial.println("Waiting for 1 second...");
+void loop() {  
+  float tempersture = calculateTemperature();
+  printText("Temperature:\n" + String(tempersture, 2) + " °C\n\n");
 
   delay(1000); // Wait for a second
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void printText(String text) {
+  display.clearDisplay(); // Clear the display buffer before printing new text
+  display.setTextSize(1); // Set text size to 1
+  display.setTextColor(BLACK); // Set text color to black (for monochromatic screen BLACK means pixel ON)
+  display.setCursor(0, 0); // Set cursor to the top-left corner
+  display.print(text); // Print the text on the display
+  display.display();
+}
+
+float calculateTemperature() {
+  // Read the analog value from the NTC thermistor
+  int adcValue = analogRead(ntc_pin);
+  Serial.print("ADC Value: ");
+  Serial.println(adcValue);
+  
+  // Convert the ADC value to voltage
+  float voltage = (adcValue / ADC_MAX) * VCC;
+  Serial.print("voltage: ");
+  Serial.println(voltage);
+  
+  // Calculate the resistance of the NTC thermistor
+  float ntc_R = (ntc_R_ref * (VCC / voltage)) - ntc_R_ref;
+  
+  // Calculate the temperature in Kelvin using the Beta formula
+  float temperatureK = (ntc_BETA * ntc_T0) / (ntc_BETA + (ntc_T0 * log(ntc_R / ntc_R0)));
+  
+  // Convert Kelvin to Celsius
+  float temperatureC = temperatureK - 273.15;
+
+  Serial.print("Temperature: ");
+  Serial.print(temperatureC);
+  Serial.println(" °C");
+
+  return temperatureC;
 }
