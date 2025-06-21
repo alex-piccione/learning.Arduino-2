@@ -49,11 +49,10 @@ void setup() {
 
 void loop() {  
   float tempersture = calculateTemperature();
-  printText("Temperature:\n" + String(tempersture, 2) + " " + (char)247 +  (char)176 + "C\n\n");
-  /*for (int x = 255; x <= 500; x++) { "C\n\n");
-  for (int x = 255; x <= 500; x++) {
+  printText("Temperature:\n" + String(tempersture, 2) + " " + (char)247 + "C\n\n");
+  /*for (int x = 255; x <= 500; x++) {
     printText(String(x) + " " + (char)x + "\n");
-    delay(1000);
+    delay(500);
   }*/
 
   delay(3000); // Wait for a second
@@ -65,8 +64,6 @@ void printText(String text) {
   display.setTextColor(BLACK); // Set text color to black (for monochromatic screen BLACK means pixel ON)
   display.setCursor(0, 0); // Set cursor to the top-left corner
   display.print(text); // Print the text on the display
-  display.print((char)248); // Stampa il simbolo del grado
-  display.print((char)176); // Stampa il simbolo del grado
   display.display();
 }
 
