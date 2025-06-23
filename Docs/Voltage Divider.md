@@ -38,6 +38,6 @@ To calculate R2 we need to use the **Voltage Divider Formula**:
 V_out = V_supply * R2/(R1 + R2)
 ```
 
-$$V_out = V_supply * R2 \div_{R1 + R2}$$
+$$V_{out} = V_{supply} * R2 \frac{R1 + R2}$$
 
 
