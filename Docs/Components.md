@@ -17,6 +17,14 @@ Hanno una batteria CR2032 per fargli mantenere l'orario anche se non alimentati.
 - DS3231  3 EUR + spedizione su ebay
 - DS1307  (vecchio standard, meno preciso e senza compensazione temperatura e con meno funzioni)
 
+# Display 16x2 characters
+HD44780   3.50 - 4.50 EUR ebay from Cina
+1602 16x2 HD44780 Character LCD Display Module LCM Gray backlight     
+(also blue backlight can be found)
+
+# Display 7-segment
+MAX7219    1.70 EUR ebay from Cina
+8 7-digit display, red
 
 
 ## Camera
@@ -132,3 +140,8 @@ https://www.youtube.com/watch?v=Fs3_zl9GsGc&ab_channel=Playduino
 
 ## KY-040
 
+
+
+## DHT21 AM2301 - Sensore umiditá e temperatura
+
+6.70EUR on ebay

@@ -22,7 +22,18 @@ How to create it? I forgot.
 There are components for everything.  
 Look [here](Docs/Components.md).
 
-## Inspiration for Wooden Alarm Clock project
 
-https://www.reddit.com/r/arduino/comments/1l3zyf0/esptimecast  
-https://github.com/mfactory-osaka/ESPTimeCast  
+## Circuit/Board design
+
+_Fritzing_ or _KiCad_.  
+Fritzing seems not to be free (8 EUR at least).  
+KiCad, I used it to chreate a schema, I added the arduino, buzzer, resistance...
+
+
+## Resistance to reduce voltage
+
+V_out = V_in + R_tot
+
+R_tot = R
+
+????
