@@ -34,4 +34,4 @@ $$ V_{out} = V_{supply} * \frac{R2}{R1 + R2} $$
 
 So, to know the value of R2:
 <!-- R2 = (R1 * (V_supply-V_out)) / V_out  -->
-$$ R2 = /frac{R1 * (V_{supply} - V_{out})}{V_{out}} $$
+$$ R2 = \frac{R1 * (V_{supply} - V_{out})}{V_{out}} $$
