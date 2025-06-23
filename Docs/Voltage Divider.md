@@ -23,13 +23,15 @@ V = I * R2
 
 ## Find out a Resistance value
 
-Using the same circuit:
-`` V_supply--- R1 --- V_out --- R2 --- GND ``
+Using the same circuit:  
+`` V_supply --- R1 --- V_out --- R2 --- GND ``
 
-and connecting the V_out point to a Arduino Analog pin, we can calculate the value of one resistence, knowinf the other one.  
-`` V_supply --- R1 --- A1 --- R2 --- GND ``
+and connecting the V_out point to a Arduino Analog pin, we can calculate the value of one resistance, knowing the other one.  
 
 For example if we know R1 but we don't know R2, to calculate R2 we need to use the **Voltage Divider Formula**:
 <!-- V_out = V_supply * R2/(R1 + R2) -->
 $$ V_{out} = V_{supply} * \frac{R2}{R1 + R2} $$
 
+So, to know the value of R2:
+<!-- R2 = (R1 * (V_supply-V_out)) / V_out  -->
+$$ R2 = /frac{R1 * (V_{supply} - V_{out})}{V_{out}} $$
