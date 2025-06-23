@@ -29,15 +29,7 @@ Using the same circuit:
 and connecting the V_out point to a Arduino Analog pin, we can calculate the value of one resistence, knowinf the other one.  
 `` V_supply --- R1 --- A1 --- R2 --- GND ``
 
-For example if we have:
-R1=10_000 Ω
-R2=?
-
-To calculate R2 we need to use the **Voltage Divider Formula**:
-``` 
-V_out = V_supply * R2/(R1 + R2)
-```
-
-$$V_{out} = V_{supply} * \frac{R2}{R1 + R2}$$
-
+For example if we know R1 but we don't know R2, to calculate R2 we need to use the **Voltage Divider Formula**:
+<!-- V_out = V_supply * R2/(R1 + R2) -->
+$$ V_{out} = V_{supply} * \frac{R2}{R1 + R2} $$
 
