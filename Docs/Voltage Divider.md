@@ -32,6 +32,6 @@ For example if we know R1 but we don't know R2, to calculate R2 we need to use t
 <!-- V_out = V_supply * R2/(R1 + R2) -->
 $$ V_{out} = V_{supply} * \frac{R2}{R1 + R2} $$
 
-So, to know the value of R2:
+From that formu;a we can derive the one to obtain the value of R2:  
 <!-- R2 = (R1 * (V_supply-V_out)) / V_out  -->
 $$ R2 = \frac{R1 * (V_{supply} - V_{out})}{V_{out}} $$

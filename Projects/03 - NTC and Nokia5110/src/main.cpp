@@ -3,15 +3,17 @@
 #include <Adafruit_GFX.h>     // Include the Adafruit GFX library
 #include <Adafruit_PCD8544.h> // Include the Adafruit PCD8544 library for Nokia 5110 LCD
 
+bool logging_enabled = true; // Enable or disable logging to Serial Monitor
+
 // NTC data
 const int ntc_pin = A0; // Pin for the NTC thermistor
 const float ntc_R0 = 10000; // NTC thermistor resistance at reference temperature (25 degrees Celsius)
-const float ntc_BETA = 4050; // Beta value for the NTC thermistor
-const float ntc_R_ref = 9850; // actual value of hte resistence used in the voltage divider
+const float ntc_BETA = 3950; // Beta value for the NTC thermistor
+const float ntc_R_ref = 9890; // actual value of the 10K resistence used in the voltage divider (it seems to go up with temperature)
 const float ntc_T0 = 298.15; // Reference temperature in Kelvin (25 degrees Celsius + 273.15)
 
-const float ADC_MAX = 1023; // Maximum ADC value for a 10-bit ADC
-const float VCC = 5;
+const float VCC = 5; // Voltage Common Collector = Positive alimentation of the circuit (5V for Arduino Uno)
+float adcToVoltageFactor = VCC / 1024; // Factor to convert ADC value to voltage (values goes from 0 to 1023, so it has 1024 steps)
 
 // Nokia 5110 data
 const int display_pin_RST = 2; // Reset pin for the LCD
@@ -22,7 +24,9 @@ const int display_pin_CLK = 6; // Clock pin for the LCD
 
 // function declarations
 void printText(String text);
+void logValue(String label, float value);
 float calculateTemperature();
+float calculateVoltage(float adcValue);
 
 // define pins of the display, CLK, DIN, DC, CE, RST
 Adafruit_PCD8544 display(display_pin_CLK, display_pin_DIN, display_pin_DC, display_pin_CE, display_pin_RST);
@@ -43,19 +47,14 @@ void setup() {
   display.clearDisplay(); // Clear the display buffer
   //display.setCursor(0, 0);
 
-  printText("Display OK!\n\nHello world");
+  printText("Display OK!");
   delay(2000); // Wait for 2 seconds to show the initial message
 }
 
 void loop() {  
   float tempersture = calculateTemperature();
   printText("Temperature:\n" + String(tempersture, 2) + " " + (char)247 + "C\n\n");
-  /*for (int x = 255; x <= 500; x++) {
-    printText(String(x) + " " + (char)x + "\n");
-    delay(500);
-  }*/
-
-  delay(3000); // Wait for a second
+  delay(1000); // Wait for a second
 }
 
 void printText(String text) {
@@ -67,35 +66,41 @@ void printText(String text) {
   display.display();
 }
 
+void logValue(String label, float value) {
+  if (logging_enabled) {
+    Serial.print(label);
+    Serial.print(": ");
+    Serial.println(value);
+  }
+}
+
 float calculateTemperature() {
   Serial.print("Calculating temperature...\n");
 
   // Read the analog value from the NTC thermistor
   float adcValue = (float)analogRead(ntc_pin);
-  Serial.print("ADC Value: ");
-  Serial.println(adcValue);
-  
+  logValue("ADC Value", adcValue);
+
   // Convert the ADC value to voltage
-  float voltage = (adcValue / ADC_MAX) * VCC;
-  Serial.print("voltage: ");
-  Serial.println(voltage);
+  float adc_voltage = calculateVoltage(adcValue);
+  logValue("ADC Voltage", adc_voltage);
   
   // Calculate the resistance of the NTC thermistor
-  //float ntc_R = (ntc_R_ref * (VCC / voltage)) - ntc_R_ref;
-  float ntc_R = ntc_R_ref * adcValue / (ADC_MAX - adcValue);
-
-  Serial.print("NTC Resistance: ");
-  Serial.println(ntc_R);
+  float ntc_R = (ntc_R_ref * (VCC-adc_voltage)) / adc_voltage; //float ntc_R = (ntc_R_ref * (VCC / voltage)) - ntc_R_ref;
+  //float ntc_R = ntc_R_ref * adcValue / (ADC_MAX - adcValue);
+  logValue("NTC Resistance", ntc_R);
   
   // Calculate the temperature in Kelvin using the Beta formula
   float temperatureK = (ntc_BETA * ntc_T0) / (ntc_BETA + (ntc_T0 * log(ntc_R / ntc_R0)));
   
   // Convert Kelvin to Celsius
   float temperatureC = temperatureK - 273.15;
-
-  Serial.print("Temperature: ");
-  Serial.print(temperatureC);
-  Serial.println(" °C");
+  logValue("Temperature in Celsius", temperatureC);
 
   return temperatureC;
+}
+
+float calculateVoltage(float adcValue) {
+  // Convert the ADC value to voltage
+  return adcValue * adcToVoltageFactor; // V = ADC value * (VCC / 1024)
 }
