@@ -19,7 +19,7 @@ It doesn't quite fit with expected values. especially the 7680 at 27... that sho
 Using a Voltage Divisor with this formula is possible to obtain the resistance of the NTC.  
 Note, the reference resistance MUST be the first in the series.
 <!-- R_ntc = (R_fix * (V_supply - V_out)) / V_out -->
-$$ R_{ntc} = \frac{R_{fix} * (V_{supply} - V_{out})}{V_{out}} $$
+$$ R_{ntc} = \frac{R_{fix} * (V_{supply} - V_{out})}{V_{out}} $$  
   
 Once you know the Resistance you can obtain the temperature with two 2 different formula:
 - B-value equation
@@ -30,13 +30,13 @@ Once you know the Resistance you can obtain the temperature with two 2 different
 It requires a **B-value** specific of the NTC thermistor.  
 It is simpler than the other but less precise, it allows to get a temperature with a 0.1 error.  
 
+<!-- T_k = 1 / (1/T_0 + 1/B_value * log(R_ntc/R_0)) -->
 
-<!-- T_k = 1 / ((1/T_0 + 1/B_value) + log(R_ntc/R_0)) -->
-
-$$ T_K = \frac{1}{((\frac{1}{T_0} + \frac{1}{\beta_value}) + \log{\frac{R_ntc}{R_0}})}
-where ${T_0}$ is ... 
-
-Datasheets online about the "103" suggests its value is 3950.  
+$$ T_K = \frac{1}{(\frac{1}{T_0} + \frac{1}{\beta_value} * \log{\frac{R_ntc}{R_0}})} $$  
+where 
+$T_0$ is the reference temperature (25°C)
+$R_0$ is the reference Resistance (10 000 Ω)
+$\beta_{value}$ is the known beta-value of hte component. Datasheets online about the "103" suggests its value is 3950.  
 
 ## Steinhart-Hart equation
 
