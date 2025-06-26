@@ -7,10 +7,10 @@ bool logging_enabled = true; // Enable or disable logging to Serial Monitor
 
 // NTC data
 const int ntc_pin = A0; // Pin for the NTC thermistor
-const float ntc_R0 = 10000; // NTC thermistor resistance at reference temperature (25 degrees Celsius)
-const float ntc_BETA = 3950; // Beta value for the NTC thermistor
-const float ntc_R_ref = 9890; // actual value of the 10K resistence used in the voltage divider (it seems to go up with temperature)
+const float ntc_R0 = 8500; // 9325.7; // NTC thermistor resistance at reference temperature (25 degrees Celsius), it should be 10 000.
 const float ntc_T0 = 298.15; // Reference temperature in Kelvin (25 degrees Celsius + 273.15)
+const float ntc_BETA = 4288.4; // 3950; // Beta value for the NTC thermistor
+const float ntc_R_ref = 9990; // actual value of the 10K resistence used in the voltage divider (it seems to go up with temperature)
 
 const float VCC = 5; // Voltage Common Collector = Positive alimentation of the circuit (5V for Arduino Uno)
 float adcToVoltageFactor = VCC / 1024; // Factor to convert ADC value to voltage (values goes from 0 to 1023, so it has 1024 steps)
@@ -86,18 +86,20 @@ float calculateTemperature() {
   logValue("ADC Voltage", adc_voltage);
   
   // Calculate the resistance of the NTC thermistor
-  float ntc_R = (ntc_R_ref * (VCC-adc_voltage)) / adc_voltage; //float ntc_R = (ntc_R_ref * (VCC / voltage)) - ntc_R_ref;
-  //float ntc_R = ntc_R_ref * adcValue / (ADC_MAX - adcValue);
+  //float ntc_R = (ntc_R_ref * (VCC-adc_voltage)) / adc_voltage;
+  float ntc_R = (ntc_R_ref * adc_voltage) / (VCC-adc_voltage);
   logValue("NTC Resistance", ntc_R);
   
   // Calculate the temperature in Kelvin using the Beta formula
-  float temperatureK = (ntc_BETA * ntc_T0) / (ntc_BETA + (ntc_T0 * log(ntc_R / ntc_R0)));
+  // T_k = 1 / (1/T_0 + 1/B_value * log(R_ntc/R_0)) -->
+  float temperature_K = 1. / ((1./ntc_T0) + (1./ntc_BETA) * log(ntc_R / ntc_R0));
+
   
   // Convert Kelvin to Celsius
-  float temperatureC = temperatureK - 273.15;
-  logValue("Temperature in Celsius", temperatureC);
+  float temperature_C = temperature_K - 273.15;
+  logValue("Temperature in Celsius", temperature_C);
 
-  return temperatureC;
+  return temperature_C;
 }
 
 float calculateVoltage(float adcValue) {
