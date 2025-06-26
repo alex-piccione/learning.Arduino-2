@@ -32,11 +32,15 @@ It is simpler than the other but less precise, it allows to get a temperature wi
 
 <!-- T_k = 1 / (1/T_0 + 1/B_value * log(R_ntc/R_0)) -->
 
-$$ T_K = \frac{1}{(\frac{1}{T_0} + \frac{1}{\beta_value} * \log{\frac{R_ntc}{R_0}})} $$  
-where 
-$T_0$ is the reference temperature (25°C)
-$R_0$ is the reference Resistance (10 000 Ω)
-$\beta_{value}$ is the known beta-value of hte component. Datasheets online about the "103" suggests its value is 3950.  
+$$ \log{\frac{ R_{ntc} } {R_0} }  $$
+
+$$ T_K = \frac{1}{(\frac{1}{T_0} + \frac{1}{\beta_value} * \log{\frac{R_{ntc}}{R_0}})} $$  
+with:   
+$T_0$ is the reference temperature (25°C)  
+$R_0$ is the reference Resistance (10 000 Ω)  
+$\beta_{value}$ is the known beta-value of hte component. Datasheets online about the "103" suggests its value is 3950.    
+  
+
 
 ## Steinhart-Hart equation
 
