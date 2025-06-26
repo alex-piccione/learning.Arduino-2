@@ -34,7 +34,7 @@ It is simpler than the other but less precise, it allows to get a temperature wi
 
 $$ \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
 
-$$ T_K = \frac{1}{(\frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{R_{ntc}}{R_0}})} $$  
+$$ T_K = \frac{1}{  \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{R_{ntc}}{R_0}}  } $$  
 with:   
 $T_0$ is the reference temperature (25°C)  
 $R_0$ is the reference Resistance (10 000 Ω)  
