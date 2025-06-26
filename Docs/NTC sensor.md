@@ -31,13 +31,6 @@ It requires a **B-value** specific of the NTC thermistor.
 It is simpler than the other but less precise, it allows to get a temperature with a 0.1 error.  
 
 <!-- T_k = 1 / (1/T_0 + 1/B_value * log(R_ntc/R_0)) -->
-
-$$       \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
-
-$$ T_K = \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
-
-$$ T_K = \frac{1}{ \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  } $$
-
 $$ T_K = \frac{1}{ \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  } $$  
 with:   
 $T_0$ is the reference temperature (25°C)  
