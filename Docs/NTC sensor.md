@@ -32,7 +32,11 @@ It is simpler than the other but less precise, it allows to get a temperature wi
 
 <!-- T_k = 1 / (1/T_0 + 1/B_value * log(R_ntc/R_0)) -->
 
-$$ \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
+$$       \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
+
+$$ T_K = \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  $$
+
+$$  \frac{1}{ \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{ R_{ntc} } {R_0} }  }  $$
 
 $$ T_K = \frac{1}{  \frac{1}{T_0} + \frac{1}{\beta_{value}} * \log{\frac{R_{ntc}}{R_0}}  } $$  
 with:   
