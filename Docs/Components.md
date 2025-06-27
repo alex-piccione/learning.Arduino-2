@@ -142,9 +142,15 @@ https://www.youtube.com/watch?v=Fs3_zl9GsGc&ab_channel=Playduino
 
 
 
-## DHT21 AM2301 - Sensore umiditá e temperatura
+## DHT22, DHT21 (AM2301) - Sensore umiditá e temperatura
 
-6.70EUR on ebay
+DHT22 is little bit better because it has 2% error instead of 3% error on Humidity.
+Both have 0.5 °C error
+
+They can have a integrade pull-up thermistor, otherwise that should be added in the circuit.
+
+DHT21 6.70 EUR on ebay
+DHT22 4 EUR on eBay (2 pieces order)
 
 Red: VDD  
 Black: GND
