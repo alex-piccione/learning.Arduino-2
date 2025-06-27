@@ -145,3 +145,7 @@ https://www.youtube.com/watch?v=Fs3_zl9GsGc&ab_channel=Playduino
 ## DHT21 AM2301 - Sensore umiditá e temperatura
 
 6.70EUR on ebay
+
+Red: VDD  
+Black: GND
+Yellow: SDA
